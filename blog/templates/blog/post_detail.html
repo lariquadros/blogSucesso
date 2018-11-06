@@ -1,0 +1,35 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+     <div class="post">
+         {% if post.published_date %}
+             <div class="date">
+                 {{ post.published_date }}
+             </div>
+         {% endif %}
+         <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+         <a class="btn btn-default"  href="{% url 'post_delete' pk=post.pk %}" onclick=" return confirm('Confirma a exclusão do Post?');"><span class="glyphicon glyphicon-trash"></span></a>
+         <h1>{{ post.title }}</h1>
+         <p>{{ post.text|linebreaksbr }}</p>
+
+
+          <div class="comentarios">
+              {% for coment in post.comentario_set.all %}
+              <p>{{coment.created_date}}    {{coment.text |linebreaksbr}}</p>
+              <a class="btn btn-default" href="{% url 'comentario_edit' pk=coment.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+              <a class="btn btn-default" href="{% url 'comentario_delete' pk=coment.pk %}" onclick=" return confirm('Confirma a exclusão do Comentário?');"><span class="glyphicon glyphicon-trash"></span></a>
+              {% endfor %}
+         </div>
+
+         <form method="POST" class="comentario-form" action="{% url 'comentario_new' %}">
+             {% csrf_token %}
+             {{ form }}
+             <input hidden='true' type="text" name="post" value="{{post.pk}}">
+             <button type="submit" class="save btn btn-default">Adicionar</button>
+         </form>
+
+     </div>
+
+
+{% endblock %}
+
