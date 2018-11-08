@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Post(models.Model):
@@ -29,3 +30,16 @@ class Comentario(models.Model):
 
     def __str__(self):
         return self.text
+
+class Pessoa(User):
+    pes_codigo = models.AutoField(primary_key=True)
+    pes_nacionalidade = models.CharField(blank=True, null=True, max_length=80, default='Brasileira')
+    pes_endereco_completo = models.CharField(max_length=500)
+    pes_telefone_p = models.CharField(max_length=20)
+
+    def publish(self):
+        self.date_joined = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.first_name

@@ -10,4 +10,6 @@ urlpatterns = [
     path('comentario/' , views.comentario_new, name='comentario_new'),
     path('comentario/<int:pk>/delete/', views.comentario_delete, name='comentario_delete'),
     path('comentario/<int:pk>/edit/', views.comentario_edit, name='comentario_edit'),
+    path('pessoa/', views.pessoa_detail, name = 'pessoa_detail'),
+    path('pessoanew/', views.pessoanew, name = 'pessoanew'),
 ]
